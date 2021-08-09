@@ -87,10 +87,15 @@ public class FreditorUI extends JComponent {
     }
 
     private static final int CTRL_OR_META = InputEvent.CTRL_DOWN_MASK | InputEvent.META_DOWN_MASK;
+    private static final int CTRL = InputEvent.CTRL_DOWN_MASK;
     private static final int CTRL_RESPECTIVELY_META = OperatingSystem.isMacintosh ? InputEvent.META_DOWN_MASK : InputEvent.CTRL_DOWN_MASK;
 
     public static boolean isControlRespectivelyCommandDown(InputEvent event) {
         return (event.getModifiersEx() & CTRL_RESPECTIVELY_META) != 0;
+    }
+
+    public static boolean isControlCommandDown(InputEvent event) {
+        return (event.getModifiersEx() & CTRL) != 0;
     }
 
     public void simulateEnter() {
@@ -289,6 +294,11 @@ public class FreditorUI extends JComponent {
                         }
                         break;
 
+		   case KeyEvent.VK_S:
+                        if (isControlRespectivelyCommandDown(event)) {
+                            freditor.slurpForward();
+                        }
+                        break;
                     default:
                         switch (event.getKeyChar()) {
                             case ')':
